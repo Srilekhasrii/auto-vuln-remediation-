@@ -1,1 +1,4 @@
+base_image: myapp
+auto_patch: true
+registry: ghcr.io/myorg
 
