@@ -1,1 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build Image') {
+            steps {
+                sh 'docker build -t myapp2:latest .'
+            }
+        }
+
+        stage('Scan Image') {
+            steps {
+                sh 'scanner/trivy-scan.sh myapp2:latest'
+            }
+        }
+
+        stage('Rebuild Secure Image') {
+            when {
+                expression { return currentBuild.result == null }
+            }
+            steps {
+                sh 'image-builder/rebuild-image.sh myapp2'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'deployer/deploy.sh'
+            }
+        }
+    }
+}
 
