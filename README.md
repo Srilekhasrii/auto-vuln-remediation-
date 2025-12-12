@@ -1,1 +1,1 @@
-# auto-vuln-remediation-
+Automated Docker Image Vulnerability Remediation System
